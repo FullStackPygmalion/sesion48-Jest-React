@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/header'
 import Product from '../components/product'
 
-const API = 'https://shopping-cart-api.khriztianmoreno.now.sh/api/products/'
+const API = 'https://shopping-node.vercel.app/api/products/'
 
 const getProducts = async (setProducts) => {
     try {
