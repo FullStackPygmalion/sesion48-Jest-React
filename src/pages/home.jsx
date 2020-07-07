@@ -1,13 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Header from '../components/header'
 import Product from '../components/product'
 
-const Home = () => (
-    <React.Fragment>
-        <Header />
-        <Product name="Chocorramo" price="2500" desciption="Rico chocorramo" />
-    </React.Fragment>
-)
+const API = 'https://shopping-cart-api.khriztianmoreno.now.sh/api/products/'
+
+const getProducts = async (setProducts) => {
+    try {
+        const result = await fetch(API)
+        const products = await result.json()
+        setProducts(products)
+    } catch (error) {
+        console.error('No se pudo mostrar la informacion', error)
+    }
+}
+
+const Home = () => {
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        getProducts(setProducts)
+    }, [])
+
+    return (
+        <React.Fragment>
+            <Header />
+            <div className="container">
+                <div className="row">
+                    {products.map((product, id) =>
+                        <div className="col-md-4 col-sm-6 mb-4" key={id}>
+                            <Product  {...product} />
+                        </div>
+                    )}
+                </div>
+            </div>
+        </React.Fragment>
+    )
+}
 
 export default Home
